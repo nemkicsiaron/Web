@@ -1,0 +1,565 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,500;0,600;0,900;1,300;1,500;1,700;1,900&display=swap');
+
+@media print{
+    header, footer, aside, nav, form, iframe, .menu, .hero, .adslot {
+        display: none;
+      }
+    .scroll{
+        display: block;
+    }
+
+}
+
+
+@media screen and (max-width: 1023px){
+    body {
+        font-size: 16px;
+    }
+
+    p, aside{
+        padding-left: 3vw !important;
+        padding-right: 1vw !important;
+    }
+
+    .caption, .contact-caption
+    {
+        text-align: center !important;
+        position: absolute !important;
+    }
+
+    .caption h1, .contact-caption{
+        font-weight: 700 !important;
+        font-size: 5vw !important;
+    }
+    .caption h2, .contact-caption{
+        font-weight: 600;
+        font-size: 3vw !important;
+    }
+    .btn, .btn:hover{
+        max-width: 100% !important;
+        padding: 0 !important;
+        min-width: 20vw !important;
+    }
+    .viddescription{
+        font-weight: 500 !important;
+        font-size: 1.2em !important;
+    }
+
+    table, .table, .table-responsive{
+        overflow-y: hidden;
+        overflow-x: scroll;
+    }
+
+    td{
+        min-width: fit-content;
+    }
+
+    footer{
+        font-size: 14px !important;
+    }
+
+    .checkbox{
+        border-width: 10px !important;
+        width: 10px !important;
+    }
+}
+
+@media screen and (max-width: 612px){
+    body {
+        font-size: 14px !important;
+    }
+
+    p, aside{
+        padding-left: 5vw !important;
+        padding-right: 2.5vw !important;
+    }
+
+    .caption h1, .contact-caption{
+        font-weight: 700 !important;
+        font-size: 2.4em !important;
+    }
+    .caption h2, .contact-caption{
+        font-weight: 600;
+        font-size: 1.8em !important;
+    }
+    footer{
+        font-size: 12px !important;
+    }
+}
+
+body{
+    overflow: hidden !important;
+    font-family: 'Poppins','Century Gothic','Verdana',sans-serif;
+    font-size: 20px;
+    padding: 0px !important;
+    margin: 0px !important;
+    color: #f1f1f1;
+    background-color: transparent !important;
+    min-height: 100vh;
+}
+
+/* ~- N A V B A R -~ */
+.nav{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding: 1rem;
+    color: #1a1a1a;
+}
+.navbar-brand img{
+    height: 2em; 
+    width: 4em;
+    max-width: 100%;
+    min-width: 70px;
+}
+
+.navbar{
+    text-transform: uppercase !important;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.5rem;
+    position: fixed;
+    width: 100%;
+    height: auto;
+    z-index: 10;
+}
+
+.navbar img{
+    height: 2rem;
+}
+
+.nav-item{
+    margin-right: 1rem !important;
+    margin-left: 1rem !important;  
+    margin-top: 0rem !important;
+    margin-bottom: 0rem !important;
+    height: 100% !important;
+    padding-left: 0.5rem;
+    text-align: center;
+    vertical-align: -webkit-baseline-middle;
+    justify-self: center;
+    justify-content: center;
+}
+.nav-item:hover{
+    color: black;
+    background-color: darkgray;
+    transition-duration: 0.5s;
+}
+
+.form-control{
+    width: 15vw !important;
+    font-size: 1rem;
+    margin-bottom: 0;
+    min-width: 6rem;
+    height: 6vh;
+}
+
+.form-inline .btn{
+    min-width: 8rem;
+    font-size: 1rem;
+}
+
+.active{
+    background-color: rgba(40, 40, 40);
+    color: #f1f1f1 !important;
+
+}
+
+.active:hover{
+    background-color: rgba(40, 40, 40);
+    color: #f1f1f1;
+}
+
+
+/* ~- S C R O L L - B E H A V I O R -~ */
+
+.scroll{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    z-index: 1;
+    height: 101vh;
+    width: 100vw !important;
+    scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+
+#up{
+    width: 2rem;
+    height: 2rem;
+    right: -0vw;
+    z-index: 10;
+    text-decoration: none;
+    text-align: center;
+    line-height: 2rem;
+    padding: 0.4rem;
+    cursor: pointer;
+}
+
+#down{
+    scroll-snap-align: start;
+    color: #1a1a1a;
+    text-align: left;
+}
+
+#top{
+    top: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.upward, .upward:link, .upward:visited{
+    color: whitesmoke !important;
+}
+
+.upward:hover{
+    color: lightgray !important;
+    text-decoration: none !important;
+}
+
+/* ~- M A I N - P A G E -~ */
+
+.home{
+    background: url(../images/background_main.jpg) no-repeat center center/cover fixed;
+    width: 100%;
+    height:100vh;
+    position: relative;
+}
+
+.caption{
+    height: auto;
+    top: 50vh;
+    position: absolute;
+    left: 50%;
+    margin-right: -50%;
+    padding: 0.2rem;
+    transform: translate(-50%, -50%);
+    width: 400%;
+    max-width: 50%;
+    min-width: 10rem;
+    font-weight: 800;
+    text-shadow: 0.2rem 0.2rem 0.2rem black;
+
+    scroll-snap-align: center;
+}
+
+.container{
+    width: 100vw;
+}
+
+.caption h1{
+    font-style: italic;
+    font-weight: 900;
+    font-size: 3vw;
+}
+
+.caption h2{
+    font-size: 2vw;
+    letter-spacing: 0.05em;
+}
+
+div.caption .btn{
+    background-color: rgb(250, 250, 250, 0.2);
+}
+
+div.caption .btn:hover{
+    background-color: rgb(250, 250, 250);
+    text-shadow: 0.1rem 0.1rem 0.1rem darkgray;
+}
+
+#intro{ 
+    color: #1a1a1a !important;
+    width: 100% !important;
+    text-align: center;
+    padding: 0 !important;
+    top:0%;
+    font-size: 1.2em;
+    z-index: 5;
+}
+
+#intro p::first-letter{
+    font-size: 4vh;
+}
+
+hr{
+    color: #1a1a1a !important;
+    height: 0;
+    border: 1px solid black;
+    width: 85%;
+    opacity: 0.6;
+    align-self: center;
+}
+
+footer {
+    display: inline-flex;
+    position: relative;
+    justify-content: space-between;
+    font-size: 1.8vw;
+    width: 100%;
+    margin-top: auto !important ;
+    box-sizing: unset !important;
+    bottom: 0;
+}
+
+/* ~- C O N T A C T - P A G E -~ */
+
+.contact{
+    background: url(../images/background_contact.jpg) no-repeat center center/cover fixed;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    margin-top: 1vh;
+}
+
+.contact-caption{
+    background-color: rgb(2, 2, 2, 0.5);
+    z-index: 8;
+    top: 5vh;
+    width: 100% !important;
+    position: absolute;
+    padding: 1rem 2rem 1rem 2rem;
+    height: 96%;
+    padding: 2rem;
+    min-width: 10rem;
+    font-weight: 500;
+    
+    padding-top: 10vh;
+    padding-bottom: 10vh;
+
+    scroll-snap-align: center;
+    overflow-y: scroll;
+}
+
+.contact-caption h1{
+    font-weight: 800;
+    text-shadow: 0.2rem 0.2rem 0.2rem black;
+}
+
+.contact-caption *{
+    text-shadow: 0.2rem 0.2rem 0.2rem black;
+}
+
+legend{
+    font-weight: 800;
+    text-shadow: 0.2rem 0.2rem 0.2rem black;
+}
+
+input, text, textarea, ::placeholder{
+    max-width: 80%;
+    margin-bottom: 0vh;
+    font-weight: 400;
+    text-shadow: none !important;
+}
+
+label{
+    font-weight: 500;
+}
+
+.radio{
+    width: 5px !important;
+    margin: 0;
+    height: 2vh;
+    min-width: 8%;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.checkbox{
+   min-width: 20px;
+   border: 1px solid black;
+   width: 0.9rem !important;
+   height: 0.9rem !important;
+}
+
+
+button, button:hover{
+    text-shadow: none !important;
+    min-width: 10vw !important;
+    font-size: 1.3rem !important;
+    border-radius: 0mm !important;
+}
+
+.jumbotron{
+    scroll-snap-align: center;
+    color: #1a1a1a;
+    z-index: 10 !important;
+    position: relative;
+    margin: 0 !important;
+}
+
+.jumbotron h1{
+    font-weight: 700;
+}
+
+.jumbotron .container .link:visited{
+    color: plum;
+}
+
+/* ~- A B O U T - P A G E -~ */
+
+.scroll-vid{
+    overflow-y: scroll;
+    overflow-x: hidden;
+    z-index: 1;
+    height: 101vh;
+    width: 100vw !important;
+    scroll-behavior: smooth;
+    scroll-snap-type: y proximity;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.video{
+    width: 99vw;
+    margin: 0;
+    padding: 0;
+    height: 98%;
+    scroll-snap-align: center;
+    position: relative;
+    align-self: center;
+}
+
+.padded{
+    padding: 3vh;
+    scroll-snap-align: start;
+}
+
+.aboutvid{
+    background: url(../images/poster.png) no-repeat center center/cover fixed;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+    margin-bottom: 0;
+}
+
+.viddescription{
+    background-color: rgba(2, 2, 2, 0.5);
+    font-weight: 600;
+    font-size: 2vw;
+    text-align: center;
+    text-shadow: 0.2rem 0.2rem 0.2rem black;
+    padding: 10vh 10vw;
+    margin-bottom: 0;
+}
+
+aside{
+    font-weight: 300;
+    font-size: 1rem;
+    text-align: left;
+}
+
+small{
+    font-size: 10px;
+}
+
+.xhtml-btn{
+    border: 1px solid #f8f9fa;;
+    border-radius: 10px;
+    background-color:rgba(250, 250, 250, 0.2);
+    color: #f8f9fa;
+    cursor: pointer;
+    display: inline-block;
+    vertical-align: middle;
+    text-decoration: none;
+    padding-right: 5%;
+    padding-left: 5%;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+/* ~- P R O D U C T - P A G E -~ */
+
+#tartalom{
+    margin: 0;
+    top: 50vh;
+    min-height: 80vh;
+    overflow: hidden;
+}
+
+.prod{
+    background: url(../images/background_product.jpg) no-repeat center center/cover fixed;
+    height: 95vh;
+}
+
+.shader{
+    position: relative;
+    background-color: rgba(2, 2, 2, 0.5);
+    height: 100%;
+    width: 100%;
+    padding-top: 11vh;
+    z-index: 8;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.shader h1{
+    font-weight: 800;
+    font-style: italic;
+    text-shadow: 0.3rem 0.3rem 0.2rem black;
+}
+
+.table{
+    scroll-snap-align: center;
+    background-color:  rgba(255, 255, 255, 1);
+    font-weight: 600;
+    font-size: 1.4rem;
+}
+
+td, th{
+    height: 5rem;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 30%;
+    margin: auto;
+}
+
+details{
+    color: #f1f1f1;
+    text-shadow: 0.3rem 0.3rem 0.1rem black;
+}
+
+
+[class*="col-"] {
+    padding: 1rem;
+    max-height: 500% !important;
+  }
+  
+  /*--- Bootstrap Mobile Gutter Fix --*/
+  .row, .container-fluid {
+  margin-left: 0px!important;
+  margin-right: 0px!important;
+  }
+  
+  /*--- iOS Fixed Background Image --*/
+  .fixed-background {
+    position: relative;
+    width: 100%;
+  }
+  .fixed-wrap {
+    clip: rect(0, auto, auto, 0);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -999!important;
+  }
+  .fixed {
+    position: fixed;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center center;
+    -webkit-transform: translateZ(0);
+            transform: translateZ(0);
+    will-change: transform;
+  }

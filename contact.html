@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="keywords" content="Bootstrap, Webstore, Devil" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="author" content="nemkicsiaron">
+    <meta prefix="og: http://ogp.me/ns#" property="og:title" content="Kapcsolat" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:image" content="https://i.imgur.com/6gWFj9c" />
+    <meta prefix="og: http://ogp.me/ns#" property="og:site_name" content="Devil Inc. Ltd." />
+    <meta prefix="og: http://ogp.me/ns#" property="og:description" content="Devil Inc. Ltd. Kapcsolat oldala. Megtalálod a cég különböző elérhetőségeit." />
+    <title>Kapcsolat | Devil Inc. Ltd.</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles/all.min.css" /> 
+    <link rel="stylesheet" href="styles/style.css" title="Normal" />
+    <link rel="alternate stylesheet" href="styles/blindstyle.css" title="For disabilities" />
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="iamges/favicon-16x16.png" />
+    <link rel="manifest" href="images/site.webmanifest">
+</head>
+
+<body>
+    <header>
+    <nav class="navbar navbar-expand-md navbar-light bg-light navbar-fixed-top d-inline-flex row">
+        <span class="sr-only"><a href="#tartalom">Ugrás a tartalomra</a> </span>
+        <a class="navbar-brand" href="index.html"> <img src="images/logo.png" alt="logo"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="products.html">Termékek</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="about.html">Rólunk</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link active" href="contact.html">Kapcsolat <span class="sr-only">(current) </span></a>
+            </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0 ml-auto d-flex justify-content-center ">
+                <input class="form-control mr-sm-2" type="search" placeholder="Aki keres az talál..." aria-label="Keresés">
+                <button class="btn btn-outline-dark" type="submit">Keresés</button>
+            </form>
+            </div>
+    </nav>
+    </header>
+    <div class="scroll">
+        <div id="top">
+        </div>
+        <main id="tartalom">
+        <div class="contact">
+            <div class="contact-caption">
+                <h1>Vedd fel velünk a kapcsolatot!</h1>
+                <br />
+                <p>Ha bármi kérdésed akadt, keress meg nyugodtan. Nem kerül sokba!!</p>
+                <form action="mailto:vregile@gmail.com" method="post" enctype="text/plain">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <fieldset>
+                            <legend>Az adataid</legend>
+                            <label for="nev"><strong>Név: </strong></label> <br />
+                            <input type="text" name="nev" id="nev" size="60" placeholder="Családnév Keresztnév" maxlength="100"/> <br />
+                            <label for="email"><strong>E-mail: </strong></label> <br />
+                            <input type="text" name="email" id="email" size="60" placeholder="Email-címed" maxlength="200" /> <br />
+                            </fieldset>
+                        </div>
+                        <div class="col-md-6">
+                            <fieldset>
+                            <legend>Milyennek találtad az élményt?</legend>
+                            <br />
+                            <p>A Te értékelésed 5-ös skálán<br /></p>
+                            <label class="radio">
+                                <input type="radio" name="survey" id="Radios1" value="1">
+                                1
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="survey" id="Radios2" value="2">
+                                2
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="survey" id="Radios3" value="3">
+                                3
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="survey" id="Radios4" value="4">
+                                4
+                            </label>
+                            <label class="radio">
+                                <input type="radio" name="survey" id="Radios5" value="5">
+                                5
+                            </label>
+                            <br />
+                            <br />
+                            <label for="chakra">&emsp;Szeretnél feliratkozi hírlevelünkre?</label>
+                            <input class="checkbox" id="chakra" type="checkbox" name="chakra" value="true" />
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <label for="comments"><strong>Üzeneted felénk: </strong></label>
+                    </div>
+                    <div class="row">
+                        <br />
+                        <br />
+                        <textarea id="comments" cols="60" rows="3" name="cselekmeny" placeholder="Röviden írd le miben segíthetünk." maxlength="800"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <button class="btn btn-primary bg-light btn-outline-dark" type="submit"> Elküld </button>
+	                        <button class="btn btn-primary bg-light btn-outline-dark" type="reset"> Töröl </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <section>
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h2 class="bold">Vagy keress meg szociálmédián</h2>
+                    <a class="link" target="blank" href="https://www.facebook.com/nemkicsiaron"> <h3>Facebook</h3> </a>
+                    <a class="link" target="blank" href="https://www.instagram.com/nemkicsiaron"> <h3>Instagram</h3> </a>
+                    <a class="link" target="blank" href="https://www.twitter.com/reREptiLE"> <h3>Twitter</h3> </a>
+                    <a class="link" target="blank" href="https://www.youtube.com/channel/UCcbslr3W17LcbMxwXyf8UfQ?view_as=subscriber"> <h3>Youtube</h3> </a>
+                </div>
+            </div>
+        </section>
+        </main>
+        <footer class="page-footer font-small footer-dark bg-dark pt-2">
+            <div class="footer-copyright text-center">
+            © 2020 Copyright: Devil Inc. Ltd.
+            </div>
+            <div>
+            <a href="#top" class="upward"> Vissza a tetejére <img src="images/up.png" alt="Vissza az oldal tetejére" id="up"> </a>
+            </div>
+        </footer>
+    </div>
+
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>
