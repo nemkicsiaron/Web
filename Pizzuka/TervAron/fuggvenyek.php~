@@ -1,0 +1,446 @@
+<?php
+
+function Debug($x) {
+	echo '<pre>';
+	print_r($x);
+	echo '</pre>';
+}
+
+function MenutIr($menu) {
+	echo '<div id="menubar">';	
+	echo '<table>';
+	foreach($menu as $index => $ertek)
+	{
+		echo '<tr>';
+		echo '<td>';
+		echo '<a href=?menu='.$index.' class="menu">'.$ertek.'</a>';
+		echo '</tr>';
+		echo '</td>';	
+	}
+	echo '</table>';
+}
+
+function Motor(&$con,$ab,&$van) {
+	global $server,$user,$password;
+	$con=mysqli_connect($server,$user,$password);
+	if($con)
+	{		
+		echo 'Kapcsolat MySQL Motorral: Ok<br>';
+		mysqli_set_charset($con, "utf8");
+		$res=mysqli_select_db($con,$ab);
+		if($res)
+			$van=1;
+		else 
+		{
+			$van=0;
+			echo "Nincs $ab adatbázis<br>";		
+		}
+	}
+	else 
+		echo 'Kapcsolat MySQL Motorral: Nincs<br>'.mysqli_connect_error().'<br>';	
+}
+
+function Adatbazis() {
+	global $ab;
+	$van=0;
+	Motor($con,$ab,$van);
+	if(!$con || $van==0)
+		echo "<script type='text/javascript' alert('HIBA: Nem létezik az adatbázis')></script>";
+	else 
+	{
+		echo "<script type='text/javascript' alert('$ab adatbázis létezik')></script>";
+		mysqli_close($con);		
+	}
+}
+
+function Mutatlekerdezest($res) {
+	echo '<table>';
+	while($sor=mysqli_fetch_row($res))
+	{
+		echo '<tr>';
+		foreach($sor as $mezo)
+			echo "<td>$mezo</td>";
+			echo '</tr>';	
+	}
+	echo '</table>';
+}
+
+function Tablak() {
+	global $ab;
+	$van=0;
+	Motor($con,$ab,$van);
+	if(!$con || $van==0)
+		echo "Baj van...<br>";
+	else 
+	{
+		$sql="SHOW TABLES";
+		$res=mysqli_query($con, $sql);
+		if(!$res)
+			echo "Hibás parancs: $sql<br>";
+		else 
+		{
+			$sorokszama=mysqli_num_rows($res);
+			echo "$sorokszama tábla<br>";
+			if($sorokszama>0)
+				Mutatlekerdezest($res);
+			else 
+			{
+				$sql='CREATE TABLE Pizza (
+					ID INT(3) AUTO_INCREMENT PRIMARY KEY,
+					Nev VARCHAR(50) NOT NULL,
+					Ar INT(2) NOT NULL,
+					Leiras VARCHAR(999))';
+				$res=mysqli_query($con,$sql);
+				if($res)
+					echo "Pizza tábla létrehozva<br>";
+				else
+					echo "Hibás lekérdezés: $sql <br>";
+			}
+			if($sorokszama==1)
+			{
+				echo "Nincs Rendelesek tabla...<br>Létre kell hozni<br>";
+				$sql='CREATE TABLE Rendelesek (
+					ID INT(10) AUTO_INCREMENT PRIMARY KEY,
+					Kliens VARCHAR(50) NOT NULL,
+					Cim VARCHAR(90) NOT NULL,
+					Datum DATE NOT NULL,
+					Tel INT(10),
+					PID VARCHAR(3) NOT NULL,
+					Menny INT(2) NOT NULL,
+					Stat BIT)';
+				$res=mysqli_query($con,$sql);
+				if($res)
+					echo "Rendelesek tábla létrehozva<br>";
+				else
+					echo "Hibás lekérdezés	: $sql <br>";
+			}
+		}
+	}	
+	mysqli_close($con);
+}
+
+function Tablaszerkezet($tabla) {
+	echo "Táblanév: $tabla<br>";
+	global $ab;
+	$van=0;
+	Motor($con,$ab,$van);
+	if(!$con || $van==0)
+		echo "Baj van...<br>";
+	else 
+	{
+		$sql="DESCRIBE $tabla";
+		$res=mysqli_query($con, $sql);
+		if(!$res)
+			echo "Hibás parancs: $sql<br>";
+		else 
+		{
+			$sorokszama=mysqli_num_rows($res);
+			if($sorokszama>0)
+				Mutatlekerdezest($res);
+			mysqli_close($con);
+		}	
+	}
+}
+
+function OlvasP(&$Nev,&$Ar,&$Leiras) {
+	if(!isset($_POST["Nev"]) || $_POST["Nev"]=="" 
+	|| !isset($_POST["Ar"]) || $_POST["Ar"]==""
+	|| !isset($_POST["Leiras"]) || $_POST["Leiras"]=="")
+	{
+		echo '<form name="olvas" action="" method="post">';
+		echo 'Pizza: <input  name="Nev" type="text"><br>';
+		echo 'Ár: <input  name="Ar" type="number" min=1 max=10><br>';
+		echo 'Leírás: <input  name="Leiras" type="text"><br>';
+		echo '<input name="gomb" type="submit" value="Mehet!">';
+		return 0; 
+	}	
+	else 
+	{
+		Debug($_POST);
+		$Nev=$_POST["Nev"];
+		$Ar=$_POST["Ar"];
+		$Leiras=$_POST["Leiras"];
+		return 1;
+	}	
+}
+
+function UjP() {
+	global $ab;
+	$van=0;
+	Motor($con,$ab,$van);
+	$sql="SELECT * FROM Pizza";
+	$res=mysqli_query($con, $sql);
+	Mutatlekerdezest($res);
+	if(!$con || $van==0)
+		echo "Baj van...<br>";
+	else 
+		if(OlvasP($Nev,$Ar,$Leiras)){
+		$sql='INSERT INTO Pizza(Nev, Ar, Leiras) VALUES 
+		("'.$Nev.'", '.$Ar.', "'.$Leiras.'")';
+		$res=mysqli_query($con, $sql);
+		if(!$res)
+			echo "Hibás parancs: $sql<br>";
+		else 
+		{
+			echo "KESZ";
+			$sql="SELECT * FROM Pizza";
+			$res=mysqli_query($con, $sql);
+			Mutatlekerdezest($res);
+		}
+	}
+	mysqli_close($con);
+}
+
+function OlvasR(&$Kliens,&$Cim,&$Datum,&$Tel,&$PID,&$Menny) {
+	if(!isset($_POST["Kliens"]) || $_POST["Kliens"]==""
+	|| !isset($_POST["Cim"]) || $_POST["Cim"]=="" 
+	|| !isset($_POST["Datum"]) || $_POST["Datum"]==""
+	|| !isset($_POST["Tel"]) || $_POST["Tel"]==""
+	|| !isset($_POST["PID"]) || $_POST["PID"]==""
+	|| !isset($_POST["Menny"]) || $_POST["Menny"]=="")
+	{
+		echo '<form name="olvas" action="" method="post">';
+		echo 'Kliens neve: <input  name="Kliens" type="text"><br>';
+		echo 'Kliens címe: <input  name="Cim" type="text"><br>';
+		echo 'Rendelés dátuma: <input  name="Datum" type="date"><br>';
+		echo 'Elérhető telefonszám: <input  name="Tel" type="number"><br>';
+		echo 'Rendelt pizza: <input  name="PID" type="number"><br>';
+		echo 'Mennyiség: <input  name="Menny" type="number" min=1 max=99><br>';;
+		echo '<input name="gomb" type="submit" value="Mehet!">';
+		return 0; 
+	}
+	else 
+	{
+		Debug($_POST);
+		$Kliens=$_POST["Kliens"];
+		$Cim=$_POST["Cim"];
+		$Datum=$_POST["Datum"];
+		$PID=$_POST["PID"];
+		$Tel=$_POST["Tel"];
+		$Menny=$_POST["Menny"];
+		return 1;
+	}
+}
+
+function UjR() {
+	global $ab;
+	$van=0;
+	Motor($con,$ab,$van);
+	/*$sql="SELECT * FROM Pizza";
+	$res=mysqli_query($con, $sql);
+	Mutatlekerdezest($res);*/
+	if(!$con || $van==0)
+		echo "Baj van...<br>";
+	else 
+		if(OlvasJ($Kliens,$Cim,$Datum,$Tel,$PID,$Menny)){
+			
+			$sql='INSERT INTO Rendelesek (Kliens, Cim, Datum, Tel, PID, Menny)';
+			
+			//VALUES ("'.$Kliens.'", "'.$Cim.'", "'.$Datum.'", '.$Tel', '.$PID.', '.$Menny.')';
+			echo $sql;			
+			$res=mysqli_query($con, $sql);
+			if(!$res)
+				echo "Hibás parancs: $sql<br>";
+			else {
+				echo "PARANCS VÉGREHAJTVA<br><br>";
+				$sql="SELECT * FROM Rendelesek";
+				$res=mysqli_query($con, $sql);
+				Mutatlekerdezest($res);
+			}
+	}
+	mysqli_close($con);
+}
+
+function T(&$value1){
+	if(!isset($_POST["value1"]) || $_POST["value1"]=="")
+	{
+		echo '<form name="olvas" action="" method="post">';
+		echo 'Törölni kívánt elem sorszáma: <input  name="value" type="number"><br>';
+		echo '<input name="gomb" type="submit" value="Mehet!">';
+		return 0;
+	}
+		
+	else
+	{
+		Debug($_POST);
+		$value1=$_POST["value1"];
+		return 1;
+	}
+
+}
+
+function Torol() {
+	global $ab;
+	$van=0;
+	Motor($con,$ab,$van);
+	
+	$sql="SELECT * FROM Pizza";
+	$res=mysqli_query($con, $sql);
+	Mutatlekerdezest($res);
+	
+	if(!$con || $van==0)
+		echo "Baj van...<br>";
+	else {
+		echo '<br>Torolni kivant rekord:<br>';
+		if(T($value1)) {
+			$sql='DELETE FROM Rendelesek WHERE ID='.$value1;
+			echo "<br><code>$sql</code><br>";
+			$res=mysqli_query($con, $sql);
+			if(!$res)
+				echo "<br>HIBAS PARANCS: <code>$sql</code><br>";
+		   else
+		   	echo "<br>PARANCS VÉGREHAJTVA<br>";
+		}
+		mysqli_close($con);
+	}
+}
+
+function Kieg() {
+	global $ab;
+	$van=0;
+	Motor($con,$ab,$van);
+	$sql="SELECT * FROM Pizza";
+				$res=mysqli_query($con, $sql);
+				Mutatlekerdezest($res);
+	if(!$con || $van==0)
+		echo "Baj van...<br>";
+	else 
+	{
+		$sql="ALTER TABLE Pizza ADD COLUMN Megjegyzes VARCHAR(40)";
+		$res=mysqli_query($con, $sql);
+		if(!$res)
+			echo "<br>A Megjegyzés mező már létezik! Létrehozás előt törölje.<br>";
+		else 
+			echo "PARANCS VÉGREHAJTVA";
+	}
+	mysqli_close($con);
+}
+
+function Kiegtorl() {
+	global $ab;
+	$van=0;
+	Motor($con,$ab,$van);
+	if(!$con || $van==0)
+		echo "Baj van...<br>";
+	else 
+	{
+		$sql="ALTER TABLE Pizza DROP Megjegyzes";
+		$res=mysqli_query($con, $sql);
+		if(!$res)
+			echo "<br>HIBA<br>";
+		else 
+			echo "PARANCS VÉGREHAJTVA";
+	}
+	mysqli_close($con);
+}
+
+function M(&$value2){
+	if(!isset($_POST["value2"]) || $_POST["value2"]=="")
+	{
+		echo '<form name="olvas" action="" method="post">';
+		echo 'Megjegyezni kívánt elem sorszáma: <input name="value" type="number"><br>';
+		echo '<input name="gomb" type="submit" value="Mehet!">';
+		return 0;
+	}
+		
+	else
+	{
+		Debug($_POST);
+		$value2=$_POST["value2"];
+		return 1;
+	}
+}
+
+function Megj() {
+	global $ab;
+	$van=0;
+	Motor($con,$ab,$van);
+	$sql="SELECT * FROM Pizza";
+	$res=mysqli_query($con, $sql);
+	Mutatlekerdezest($res);
+	if(!$con || $van==0)
+		echo "Baj van...<br>";
+	else 
+	{
+		if(M($value2)){
+		$sql='UPDATE Pizza SET Megjegyzes=Nev WHERE ID='.$value2.'';
+		echo "<br>$sql<br>";
+		$res=mysqli_query($con, $sql);
+		if(!$res)
+			echo "<br>HIBAS PARANCS: $sql<br>";
+		else 
+			echo "PARANCS VÉGREHAJTVA";
+		$sql="SELECT * FROM Pizza";
+		$res=mysqli_query($con, $sql);
+		Mutatlekerdezest($res);
+		}
+	}
+	mysqli_close($con);
+}
+
+function Nov(){
+	global $ab;
+	$van=0;
+	Motor($con,$ab,$van);
+	$sql="SELECT * FROM Rendelesek";
+				$res=mysqli_query($con, $sql);
+				Mutatlekerdezest($res);
+	if(!$con || $van==0)
+		echo "Baj van...<br>";
+	else 
+	{
+		$sql="UPDATE Rendelesek SET Tel=Tel+1 WHERE Tel<10";
+		$res=mysqli_query($con, $sql);
+		if(!$res)
+			echo "<br>HIBAS PARANCS: $sql<br>";
+		else 
+			echo "PARANCS VÉGREHAJTVA";
+			$sql="SELECT * FROM Rendelesek";
+				$res=mysqli_query($con, $sql);
+				Mutatlekerdezest($res);
+		}
+		mysqli_close($con);
+	}
+
+function Leiras(&$value3){
+	if(!isset($_POST["value3"]) || $_POST["value3"]=="")
+	{
+		echo '<form name="olvas" action="" method="post">';
+		echo 'Kurzust tartó tanár neve: <input name="value" type="text"><br>';
+		echo '<input name="gomb" type="submit" value="Mehet!">';
+		return 0;
+	}
+	else
+	{
+		Debug($_POST);
+		$value3=$_POST["value3"];
+		return 1;
+	}
+}
+
+function Lista(){
+	global $ab;
+	$van=0;
+	Motor($con,$ab,$van);
+	if(!$con || $van==0)
+		echo "Baj van...<br>";
+	else 
+	{
+		$sql='SELECT * FROM Pizza';
+		$res=mysqli_query($con, $sql);
+		if(Leiras($value3)){
+		$sql='SELECT Pizza.Nev, Rendelesek.Cim, Rendelesek.Tel FROM Pizza INNER JOIN Rendelesek 
+		ON Pizza.ID=Rendelesek.PID WHERE Pizza.Leiras='.$value3.'ORDER BY Rendelesek.Cim';
+		$res=mysqli_query($con, $sql);
+		if(!$res)
+			echo "<br>HIBAS PARANCS: $sql<br>";
+		else 
+			echo "PARANCS VÉGREHAJTVA";
+		$res=mysqli_query($con, $sql);
+		Mutatlekerdezest($res);
+		}
+	}
+	mysqli_close($con);
+}
+
+?>

@@ -1,0 +1,93 @@
+﻿<?php
+session_start();
+	include('valtozok.php');
+	include('config.php');
+	include('TervFunctions.php');
+	if(!isset($_SESSION['belepve']))
+		$_SESSION['belepve']=0;	
+	echo '<div class="hero-bkg-animated">';
+	echo '<head>
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/site.webmanifest">
+	</head>';
+	Fejlec();
+	echo '</div>';
+	if($_SESSION['belepve']==0)
+		header("Location: /KezelAron");
+	else
+		MenutIr($tmenu);
+	if(!isset($_GET["menu"]))//ha nem volt kattintás valamelyik menupontra...
+	{	
+		echo '<div id="content">';
+		echo "<script type='text/javascript' alert('Karakter-kódolás teszt: áéíóöőúüű - ÁÉÍÓÖŐÚÜŰ')</script>";
+		echo "</div>";
+	}
+	else   
+		switch($_GET["menu"])
+		{	case 0:
+				echo '<div id="content">';
+				echo $tmenu[0];
+				BeRegisztral();
+				echo "</div>";
+				break;
+			case 1:
+				echo '<div id="content">';
+				echo $tmenu[1];
+				Login();
+				echo "</div>";
+				break;
+			case 2:
+				echo '<div id="content">';
+				echo $tmenu[2];
+				PizzaT();
+				echo "</div>";
+				break;
+			case 3:
+				echo '<div id="content">';
+				echo $tmenu[3];
+				RendelesekT();
+				echo "</div>";
+				break;
+			case 4:
+				echo '<div id="content">';
+				echo $tmenu[4];
+				AdminT();
+				echo "</div>";
+				break;
+			case 5:
+				echo '<div id="content">';
+				echo $tmenu[5];
+				Adatbazis();
+				echo "</div>";
+				break;
+			case 6:
+				echo '<div id="content">';
+				echo $tmenu[6];
+				Tablak();
+				echo "</div>";
+				break;
+			case 7:
+				echo '<div id="content">';
+				echo $lmenu[7];
+				if(Belep())
+					Header('Location: TervAron');
+			case 8:
+				echo '<div id="content">';
+				echo $tmenu[8];
+				UjPizza();
+				break;
+			case 9:
+				echo '<div id="content">';
+				echo $tmenu[9];
+				UjRend();
+				break;
+			case 11:
+				echo '<div id="content">';
+				echo $tmenu[11];
+				$_SESSION['belepve']=0;
+				Header('Location: /KezelAron');
+		}
+	Lablec();
+?>

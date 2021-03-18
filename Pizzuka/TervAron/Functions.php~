@@ -1,0 +1,236 @@
+<?php
+	function Debug($x)
+	{
+		echo '<pre>';
+		print_r($x);
+		echo '</pre>';
+	}
+
+	function MenuIr($menu)
+	{
+		echo '<nav><ul>';
+		foreach($menu as $index=>$ertek)		
+			echo '<li><a href=?menu='.$index.' class="menu">'.$ertek.'</a></li>';
+		echo '</ul></nav>';	
+	}
+
+	function Motor(&$con, $ab, &$van)
+	{
+		global $host, $user, $password;
+		$con=mysqli_connect($host, $user, $password);
+		if($con)
+		{
+			echo 'Kapcsolat Mysql motorral: OK<br>';
+			mysqli_set_charset($con, "utf8");
+			$res=mysqli_select_db($con, $ab);
+			if($res)
+			$van=1;
+			else
+			{
+				$van=0;
+				echo "Nincs $ab adatbázis<br>";
+			}
+		}
+		else
+			echo 'Kapcsolat Mysql motorral: Nincs<br>'.mysqli_connect_error().'<br>';
+		
+	}
+
+	function Adatbazis()
+	{
+		global $ab;
+		$van=0;
+		Motor($con, $ab, $van);
+		if(!$con || $van==0)
+			echo 'Baj van az adatbázissal...<br>';
+		else
+		{
+			echo "Van $ab adatbazis<br>";
+			mysqli_close($con);
+		}
+	}
+	function MutatLekerdezes($res)
+	{
+		echo "<table>";
+		while($sor=mysqli_fetch_row($res))
+		{
+			echo "<tr>";
+			foreach($sor as $ertek)
+				echo "<td>$ertek</td>";
+			echo"</tr>";
+		}
+		echo "</table>";
+	}
+
+	function Tablaszerkezet($con, $tabla)
+	{
+		$sql="DESCRIBE $tabla";
+		$res=mysqli_query($con, $sql);
+		if(!$res)
+			echo "Hibás parancs: $sql<br>";
+		else
+			MutatLekerdezes($res);	
+			
+	}
+	
+	function Tablak()
+	{
+		global $ab;
+		$van=0;
+		Motor($con, $ab, $van);
+		if(!$con || $van==0)
+			echo 'Baj van...<br>';
+		else
+		{
+			$sql="SHOW TABLES";
+			$res=mysqli_query($con, $sql);
+			if(!$res)
+				echo "Hibás parancs: $sql<br>";
+			else
+			{
+				$sorokszama=mysqli_num_rows($res);
+				echo "$sorokszama tábla<br>";
+				if($sorokszama>0)
+					MutatLekerdezes($res);
+			}
+		}
+		mysqli_close($con);
+	}
+	function Csapatok()
+	{
+		global $ab;
+		$van=0;
+		Motor($con, $ab, $van);
+		if(!$con || $van==0)
+			echo 'Baj van...<br>';
+		else
+		{	$sql="Select *From Csapatok";
+			$res=mysqli_query($con, $sql);
+			if($res)
+				Tablaszerkezet($con,"Csapatok");
+			else
+			{
+				$sql='CREATE TABLE Csapatok
+				(ID INT(5) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+				Nev VARCHAR(20),
+				Pontszam INT(2),
+				Nyert INT(2),
+				Dontetlen INT(2),
+				Veszitett INT(2),
+				Rugott INT(2),
+				Kapott INT(2))';
+				$res=mysqli_query($con, $sql);
+					if($res)
+						echo "Csapatok tábla létrehozva<br>";
+					else
+						echo 'Hibás lekérdezés:<font color="blue">'.$sql.'</font><br>';
+			}
+		}
+		mysqli_close($con);
+	}
+
+	function Merkozesek()
+	{
+		global $ab;
+		$van=0;
+		Motor($con, $ab, $van);
+		if(!$con || $van==0)
+			echo 'Baj van...<br>';
+		else
+		{	$sql="Select *From Merkozesek";
+			$res=mysqli_query($con, $sql);
+			if($res)
+				Tablaszerkezet($con,"Merkozesek");
+			else
+			{
+				$sql='CREATE TABLE Merkozesek
+						(Sorszam INT(10) AUTO_INCREMENT PRIMARY KEY,
+						ID1 INT(2),
+						ID2 INT(2),
+						GOL1 INT(2),
+						GOL2 INT(2))';
+				$res=mysqli_query($con, $sql);
+				if($res)
+						echo "Merkozesek tábla létrehozva<br>";
+					else
+						echo 'Hibás lekérdezés:<font color="blue">'.$sql.'</font><br>';
+			}
+		}
+		mysqli_close($con);
+	}
+function Tarol($con, $x, $y)
+{
+	$sql='INSERT INTO Admin (User, Jelszo) VALUES 
+		("'.$x.'", "'.sha1($y).'")';
+	$res=mysqli_query($con, $sql);
+	if(!$res)
+		echo "Hibás beszurás: <br>$sql<br>";
+	else
+		echo "minden ok<br>";
+}
+function Regisztral($con)
+	{
+		if(!isset($_POST["user"]) || $_POST["user"]=="" ||
+			!isset($_POST["jel"]) || $_POST["jel"]=="")
+		{
+			echo '<form name="Regisztracio" action="" method="POST">';
+			echo 'A felhasználó neve nem több 16 karakter<br>';
+			echo 'A jelszó nem lehet több mint 16 karakter<br>';
+			echo '<table border="0">';
+			echo '<tr><td>User:</td><td><input name="user" type="text"></td></tr>';
+			echo '<tr><td>Jelszó:</td><td><input name="jel" type="password"></td></tr>';
+			echo '</table>';
+			echo '<input name="gomb" type="submit" value="Mehet">';
+			echo '</form>';
+			return 0;
+		}
+		else
+		{
+			Debug($_POST);
+			Tarol($con, $_POST["user"], $_POST["jel"]);
+			return 1;
+		}
+
+	}
+	function AdminTabla()
+	{
+		global $ab;
+		$van=0;
+		Motor($con, $ab, $van);
+		if(!$con || $van==0)
+			echo 'Baj van...<br>';
+		else
+		{	$sql="Select *From Admin";
+			$res=mysqli_query($con, $sql);
+			if($res)
+			{	Tablaszerkezet($con,"Admin");
+				$nr=mysqli_num_rows($res);
+				if($nr==0)
+				{
+					echo 'Nincs adminisztrátor<br>Regisztrálni kell...<br>';
+					if(Regisztral($con))
+						echo 'Sikeres regisztráció<br>';
+				}
+				else
+				{
+				  	MutatLekerdezes($res);
+				}
+			}
+			else
+			{
+				$sql='CREATE TABLE Admin
+					(User varchar(16) PRIMARY KEY NOT NULL,
+					Jelszo varchar(255) NOT NULL)';
+				$res=mysqli_query($con, $sql);
+				if($res)
+					echo "Admin tábla létrehozva<br>";
+				else
+					echo 'Hibás lekérdezés:<font color="blue">'.$sql.'</font><br>';
+			}
+	
+		}
+	
+		
+	mysqli_close($con);
+	}
+?>

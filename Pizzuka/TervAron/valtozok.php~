@@ -1,0 +1,30 @@
+﻿<?php
+	$lmenu[7]="Admin Belépés";
+
+	$tmenu[0]="Regisztráció";
+	$tmenu[2]="Pizza Tábla";
+	$tmenu[3]="Rendelesek Tábla";
+	$tmenu[4]="Admin Tábla";
+	$tmenu[5]="Adatbázisvizsgálat";
+	$tmenu[6]="Táblák";
+	$tmenu[8]="Új Pizza";
+	$tmenu[9]="Új Rendelés";
+	$tmenu[10]="Rendelés Módosítása";
+	$tmenu[11]="Kilépés";
+	
+	/*
+	$menu[4]="Új Kurzus";
+	$menu[5]="Új Jegy";
+	$menu[6]="Rekord törlés";
+	$menu[7]="Megjegyzés";
+	$menu[8]="Megjegyzés mező törlése";
+	$menu[9]="Megjegyzés kurzusnal";
+	$menu[10]="Jegynövelés";
+	$menu[11]="Lista";
+	*/
+	
+	$ab="diak10";
+	$server="localhost";
+	$user="diak";
+	$password="123456";
+?>

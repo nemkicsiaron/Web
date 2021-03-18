@@ -1,0 +1,62 @@
+﻿body {
+	margin: 0px auto;
+	width: 800px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	/*font-size: 18px;*/
+	font-weight: normal;
+	color: #444444;
+	padding: 6px;
+}
+#nagydoboz {
+	position: absolute;
+	height: auto;
+	width: 800px;
+}
+#header {
+	position: absolute;
+	height: 225px;
+	width: 800px;
+	top: 25px;
+	background-image: url('miko.jpg');
+	font-size: 18px;
+	color: #ff0000;
+}
+
+#content {
+	position: absolute;
+	width: 570px;
+	height: auto;
+	top: 260px;
+	left: 230px;
+	background-color:#E5F9D7;
+	/*font-size: 12px;*/
+	color: #3C5E4A;
+	float: right;
+}
+
+#menubar {
+	position: absolute;
+	width: 225px;
+	height: auto;
+	top: 260px;
+	background-color:#D7E5F9;
+	font-size: 12px;
+	float: left;
+}
+
+.menu {
+	display: block;
+	height: 20px;
+	width: 225px;
+	text-align: center;
+	font-size: 10px;
+	font-weight: bold;
+	color: #444444;
+	background-color: #ffffff;
+	text-decoration: none;
+}
+
+.menu:hover {
+	color: #FF0000;
+	background-color: #FFDAA2;
+}
